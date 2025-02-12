@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Aplicación de Doblaje</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h1>Aplicación de Doblaje</h1>
+  <label for="sceneSelect">Elige una escena:</label>
+  <select id="sceneSelect">
+    <option value="" disabled selected>-- Selecciona una escena --</option>
+    <option value="scene1">Escena 1</option>
+    <option value="scene2">Escena 2</option>
+  </select>
+
+  <div id="appContainer">
+    <div id="videoContainer">
+      <video id="videoPlayer" controls>
+        <!-- La fuente del video se establecerá dinámicamente -->
+      </video>
+      <div>
+        <button id="playBtn">Reproducir</button>
+        <button id="pauseBtn">Pausar</button>
+        <button id="recordBtn">Iniciar Grabación</button>
+        <button id="stopRecordBtn" disabled>Detener Grabación</button>
+      </div>
+      <div id="downloadContainer"></div>
+    </div>
+    <div id="scriptContainer">
+      <h3>Guión</h3>
+      <div id="scriptText">
+        <!-- El texto del guión se cargará dinámicamente -->
+      </div>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>

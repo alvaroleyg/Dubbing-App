@@ -1,0 +1,29 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+  }
+  #appContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+  }
+  #videoContainer {
+    flex: 1;
+  }
+  #scriptContainer {
+    flex: 1;
+    background-color: #f5f5f5;
+    padding: 10px;
+    border: 1px solid #ddd;
+    height: 360px;
+    overflow-y: auto;
+  }
+  video {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+  }
+  button {
+    margin: 5px;
+    padding: 10px 15px;
+  }
