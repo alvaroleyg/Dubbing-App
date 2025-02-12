@@ -7,16 +7,33 @@ document.addEventListener('DOMContentLoaded', () => {
     const recording = new Audio();
     const themeBtn = document.getElementById('theme-btn');
     const bodyElement = document.body;
+    const timeCode = document.getElementById('time-code');
 
-    themeBtn.addEventListener('click', () => {
+    // Función para cambiar el tema
+    function toggleTheme() {
         bodyElement.classList.toggle('dark-theme');
-    });
+    }
 
-    sceneSelect.addEventListener('change', loadScene);
+    // Asignar evento al botón de tema
+    if (themeBtn) {
+        themeBtn.addEventListener('click', toggleTheme);
+    }
+
+    function updateTimeCode() {
+        const hours = Math.floor(sceneVideo.currentTime / 3600).toString().padStart(2, '0');
+        const minutes = Math.floor((sceneVideo.currentTime % 3600) / 60).toString().padStart(2, '0');
+        const seconds = Math.floor(sceneVideo.currentTime % 60).toString().padStart(2, '0');
+        const fps = 24; // Ajusta según la tasa de fotogramas del video
+        const frames = Math.floor((sceneVideo.currentTime % 1) * fps).toString().padStart(2, '0');
+        timeCode.textContent = `${hours}:${minutes}:${seconds}:${frames}`;
+    }
 
     function loadScene() {
         const selectedScene = sceneSelect.value;
         sceneVideo.src = `../src/videos/${selectedScene}.mp4`;
+        sceneVideo.load(); // Forzar la carga del nuevo video
+        sceneVideo.currentTime = 0; // Reiniciar el tiempo del video
+        sceneVideo.pause(); // Pausar el video
         fetch(`../src/scripts/${selectedScene}_script.txt`)
             .then(response => response.text())
             .then(data => {
@@ -27,6 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let mediaRecorder;
     let audioChunks = [];
     let isRecording = false;
+    let timeUpdateInterval;
 
     recordBtn.addEventListener('click', () => {
         if (!isRecording) {
@@ -48,6 +66,9 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         mediaRecorder.start();
         sceneVideo.play();
+        if (!timeUpdateInterval) {
+            timeUpdateInterval = setInterval(updateTimeCode, 100);
+        }
     }
 
     function stopRecording() {
@@ -60,6 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
             recordBtn.classList.remove('recording');
         };
         sceneVideo.pause();
+        clearInterval(timeUpdateInterval);
     }
 
     playBtn.addEventListener('click', () => {
@@ -68,11 +90,15 @@ document.addEventListener('DOMContentLoaded', () => {
             recording.play();
             playBtn.querySelector('i').classList.replace('fa-play', 'fa-pause');
             playBtn.classList.add('pause-btn');
+            if (!timeUpdateInterval) {
+                timeUpdateInterval = setInterval(updateTimeCode, 100);
+            }
         } else {
             sceneVideo.pause();
             recording.pause();
             playBtn.querySelector('i').classList.replace('fa-pause', 'fa-play');
             playBtn.classList.remove('pause-btn');
+            clearInterval(timeUpdateInterval);
         }
     });
 
@@ -83,6 +109,8 @@ document.addEventListener('DOMContentLoaded', () => {
         recording.pause();
         playBtn.querySelector('i').classList.replace('fa-pause', 'fa-play');
         playBtn.classList.remove('pause-btn');
+        timeCode.textContent = '00:00:00:00';
+        clearInterval(timeUpdateInterval);
         if (isRecording) {
             stopRecording();
         }
@@ -93,5 +121,13 @@ document.addEventListener('DOMContentLoaded', () => {
         recording.pause();
         playBtn.querySelector('i').classList.replace('fa-pause', 'fa-play');
         playBtn.classList.remove('pause-btn');
+        timeCode.textContent = '00:00:00:00';
+        clearInterval(timeUpdateInterval);
     });
+
+    // Asegurarse de que se cargue la primera escena al inicio
+    loadScene();
+
+    // Evento para cambiar de escena
+    sceneSelect.addEventListener('change', loadScene);
 });

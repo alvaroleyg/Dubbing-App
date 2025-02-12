@@ -74,20 +74,28 @@ body.dark-theme header {
 }
 
 #script-container {
+    width: 35%;
     flex: 0.35;
     border-left: 1px solid #ccc;
-    padding-left: 20px;
+    padding: 20px;
 }
 
 #transport-controls {
-    display: flex;
-    justify-content: center;
+    display: flex; /* Usar Flexbox */
+    justify-content: flex-start; /* Alinear elementos a la izquierda */
     align-items: center;
     background-color: #a0a0a0;
     padding: 10px;
     border-radius: 3px;
     margin: 10px;
     gap: 10px;
+}
+
+#time-code {
+    margin-right: 15px; /* Separación entre contador y botones */
+    font-family: monospace; /* Fuente para un aspecto técnico */
+    font-size: 30px;
+    color: #fff;
 }
 
 .control-btn {
