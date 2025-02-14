@@ -15,10 +15,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Asignar evento al botón de tema
-    if (themeBtn) {
-        themeBtn.addEventListener('click', toggleTheme);
-    }
+    themeBtn.addEventListener('click', toggleTheme);
 
+    // Código de tiempo
     function updateTimeCode() {
         const hours = Math.floor(sceneVideo.currentTime / 3600).toString().padStart(2, '0');
         const minutes = Math.floor((sceneVideo.currentTime % 3600) / 60).toString().padStart(2, '0');
@@ -28,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
         timeCode.textContent = `${hours}:${minutes}:${seconds}:${frames}`;
     }
 
+    // Cargar vídeo y guión
     function loadScene() {
         const selectedScene = sceneSelect.value;
         sceneVideo.src = `../src/videos/${selectedScene}.mp4`;
@@ -41,6 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
 
+    // Controles transporte
     let mediaRecorder;
     let audioChunks = [];
     let isRecording = false;
