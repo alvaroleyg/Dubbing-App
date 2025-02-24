@@ -27,8 +27,10 @@
     <div id="video-container">
       <div id="transport-controls">
         <div id="time-code">00:00:00:00</div>
+        <!-- Solo se usan play y stop; la pausa se maneja al pulsar Play de nuevo -->
         <button id="play-btn" class="control-btn play-btn"><i class="fa-solid fa-play"></i></button>
         <button id="stop-btn" class="control-btn stop-btn"><i class="fa-solid fa-stop"></i></button>
+        <!-- Botón para grabar -->
         <button id="record-btn" class="control-btn record-btn"><i class="fa-solid fa-circle"></i></button>
       </div>
       <video id="scene-video"></video>
@@ -39,8 +41,8 @@
     </div>
   </div>
   <div id="waveform-container" style="width: 100%; padding: 20px;">
-    <h2>Forma de Onda del Audio</h2>
-    <div id="waveform" style="height: 100px; background: #f0f0f0;"></div>
+    <div id="video-waveform" style="height: 100px; background: #f0f0f0;"></div>
+    <div id="record-waveform" style="height: 100px; background: #f0f0f0;"></div>
   </div>
   <!-- Carga el script principal como módulo -->
   <script type="module" src="js/main.js"></script>
